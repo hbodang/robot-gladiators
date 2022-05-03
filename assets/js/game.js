@@ -73,6 +73,10 @@ var startGame = function()
             var pickedEnemyName = enemyNames[i];
             enemyHealth = 50;
             fight(pickedEnemyName);
+            if ( playerHealth > 0 && i < enemyNames.length -1)
+            {
+                shop();
+            }
         }
         else
         {
@@ -105,6 +109,11 @@ var endGame = function()
     {
         window.alert("Thank you for playing Robot Gladiators! Come back soon!");
     }
+}
+
+var shop = function()
+{
+    console.log("entered the shop");
 }
 
 //Start the game when page loads
