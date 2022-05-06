@@ -7,6 +7,36 @@ var randomNumber = function(min, max)
     return value;
 };
 
+//FIGHT OR SKIP OPTION
+var fightOrSkip = function()
+{
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+
+    if (promptFight === "" || promptFight === null)
+    {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+
+    //Change input to all lower case for logic
+    promptFight = promptFight.toLowerCase();
+    //SKIP
+    if (promptFight === "skip")
+    {
+        //confirmation
+        var confirmSkip = window.confirm("Are you sure you would like to quit?");
+
+        if (confirmSkip)
+        {
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            console.log("playerMoney", playerInfo.money);
+            return true;
+        }
+    }
+    return false;
+};
+
 //FIGHT
 var fight = function(enemy)
 {
@@ -14,23 +44,10 @@ var fight = function(enemy)
     //Ask if they want to fight or skip
     while(playerInfo.health > 0 && enemy.health > 0)
     {
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-
-        //SKIP
-        if (promptFight === "skip" || promptFight === "SKIP")
+        if(fightOrSkip())
         {
-            //confirmation
-            var confirmSkip = window.confirm("Are you sure you would like to quit?");
-
-            if (confirmSkip)
-            {
-                window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerMoney", playerInfo.money);
-                break;
-            }
+            break;
         }
-
         var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
         enemy.health = Math.max(0, enemy.health - damage);
         console.log(playerInfo.name, " attacked ", enemy.name, ". ", enemy.name, " now has ", enemy.health, " health remaining.");
